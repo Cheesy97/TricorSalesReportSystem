@@ -1,0 +1,39 @@
+﻿@page "{id:int}"
+@using SalesReportSystem.Pages.Report.Model
+@model SalesReportSystem.Pages.Report.admin.EditSalesModel
+@{
+}
+
+<div class="container">
+    <h3>Edit Sales Record</h3>
+    <hr />
+    <br />
+    <form method="post">
+        <input asp-for="Sale.SaleId" type="hidden" />
+        <div class="row">
+            <div class="col-md-4">
+                <label asp-for="Sale.SaleDate"></label>
+                <input asp-for="Sale.SaleDate" class="form-control" />
+                <span asp-validation-for="Sale.SaleDate" class="text-danger" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label asp-for="Sale.Amount"></label>
+                <input asp-for="Sale.Amount" class="form-control" />
+                <span asp-validation-for="Sale.Amount" class="text-danger" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label asp-for="Sale.UserId"></label>
+                <select asp-for="Sale.UserId" asp-items="@(new SelectList(Model.ddlUser,"UserId","Name"))"></select>
+                <span asp-validation-for="Sale.UserId" class="text-danger" />
+            </div>
+        </div>
+        
+        <br />
+        <input type="submit" value="Save" class="btn btn-primary" />
+        <a class="btn btn-default" onclick="history.back()">Cancel</a>
+    </form>
+</div>

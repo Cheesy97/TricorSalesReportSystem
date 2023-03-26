@@ -1,0 +1,52 @@
+﻿@page
+@model SalesReportSystem.Pages.Report.admin.AllSalesRecordModel
+@{
+}
+<h2>All Sales Record</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>No.</th>
+            <th>
+                @Html.DisplayName("Sale Date")
+            </th>
+            <th>
+                @Html.DisplayName("Sale Amount")
+            </th>
+            <th>
+                @Html.DisplayName("Update Date")
+            </th>
+            <th>
+                @Html.DisplayName("Sale Person Name")
+            </th>
+            <th>Edit | Delete</th>
+        </tr>
+    </thead>
+    @for (var item = 1; item < (Model.Data.Count()); item++)
+    {
+        <tr>
+            <td>@item</td>
+            <td>@Model.Data[item].SaleDate</td>
+            <td>@Model.Data[item].Amount</td>
+            <td>@Model.Data[item].UpdateDate</td>
+            <td>@Model.Data[item].SalePersonName</td>
+            <td>
+                <a asp-page="./EditSales" asp-route-id="@Model.Data[item].SaleId">Edit</a> |
+                <a asp-page="./AllSalesRecord" onclick="return confirm
+                    ('Are you sure you want to delete this item?');"
+                   asp-page-handler="Delete" asp-route-id="@Model.Data[item].SaleId">Delete</a>
+            </td>
+        </tr>
+    }
+</table>
+<div>
+    <ul class="pagination">
+        @for (var i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                <a asp-page="/AllSalesRecord" asp-route-currentpage="@i" class="page-link">@i</a>
+            </li>
+        }
+    </ul>
+</div>

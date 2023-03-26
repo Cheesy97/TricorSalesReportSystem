@@ -1,0 +1,55 @@
+﻿@page
+@model SalesReportSystem.Pages.RegisterModel
+@{
+    Layout = "_LayoutManager";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center align-items-center">
+        <h1 class="mb-3">Registration</h1>
+
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="mb-3">
+                <label class="form-label" asp-for="Model.user.Name">User Name :</label>
+                <input type="text" asp-for="Model.user.Name" class="form-control" />
+                <span asp-validation-for="Model.user.Name" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label" asp-for="Model.Password">Password :</label>
+                <input type="password" asp-for="Model.Password" class="form-control" />
+                <span asp-validation-for="Model.Password" class="text-danger" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label" asp-for="Model.comfirmPassword">Confirm Password :</label>
+                <input type="password" asp-for="Model.comfirmPassword" class="form-control" />
+                <span asp-validation-for="Model.comfirmPassword" class="text-danger" />
+            </div>
+           
+            <div class="col-md-3">
+                <label class="form-label" asp-for="Model.user.RoleCode">Role :</label>
+                <fieldset>
+                    <div class="mb-3">
+                            @foreach (var role in Model.ddlRole)
+                            {
+                                <input class="form-check-input radio-inline" type="radio" asp-for="Model.user.RoleCode" value="@role.RoleCode" id="@role.RoleId" />
+                                <a>@role.RoleName&nbsp; &nbsp;</a>
+                            }
+                        
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label" asp-for="Model.user.ReportManager">Report Manager : </label>
+                <select asp-for="Model.user.ReportManager" asp-items="@(new SelectList(Model.ddlManager,"UserId","Name"))"></select>
+                <span asp-validation-for="Model.user.ReportManager" class="text-danger" />
+            </div>
+
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+        </form>
+    </div>
+</div>

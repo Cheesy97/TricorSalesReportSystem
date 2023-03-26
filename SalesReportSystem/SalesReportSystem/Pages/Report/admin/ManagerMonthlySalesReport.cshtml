@@ -1,0 +1,84 @@
+﻿@page
+@model SalesReportSystem.Pages.Report.admin.ManagerMonthlySalesReportModel
+@{
+    Layout = "_LayoutManager";
+}
+
+ <form method="post">
+    <div class ="form-row">
+        <div class="form-group col-md-1">
+            <label>Year:</label>
+            <select name="getYear" asp-for="getYear" asp-items="Model.ddlYear" class="form-control"></select>
+        </div>
+        <div class="form-group col-md-1">
+            <label>Month:</label>
+            <select asp-for="getMonth" class="form-control">
+                @{
+                    foreach (var monthName in Model.monthNames)
+                    {
+                        <option>@monthName</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group col-md-3">
+        <label>Report Manager</label>
+        <select id="getManager" name="getManager" asp-for="getManager" asp-items="Model.ddlManager" class="form-control"></select>
+    </div>
+    <br /><br />
+    <div class="form-row">
+        <div class="col">
+            <button type="submit" class="btn btn-primary" onclick="checkValue();">Search</button>
+        </div>
+    </div>
+</form>
+
+@if (Model.MonthlyReportList != null)
+{
+    <div id="SalesReportRequest">
+        <div class="container mt-5">
+            <div class="row justify-content-center align-items-center">
+                <h1 class="mb-3">@Model.FilterSearchMessage</h1>
+                <table class="table table-primary">
+                    <thead>
+                        <tr>
+                            <th>Sale Person Name</th>
+                            <th>Total Sales Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.MonthlyReportList)
+                        {
+                            <tr>
+                                <td>@item.SalePersonName</td>
+                                <td>@item.Amount</td>
+                            </tr>
+                        }
+                        <tr class="table-success">
+                            <td style="text-align:center; font-weight:bolder">Total :</td>
+                            <td style="color:orangered; font-weight:bolder">@Model.TotalMontlySalesAmount</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+else if(Model.getManager != 0)
+{
+    <h2>No Sales on this Month</h2>
+}
+
+<script>
+    function checkValue() {
+        var selectElement = document.getElementById("getManager");
+        var selectedValue = selectElement.value;
+        if (selectedValue === "-- Please Select --") {
+            alert("Please select a Manager.");
+            return false;
+        } else {
+            return true;
+        }
+    }
+</script>
